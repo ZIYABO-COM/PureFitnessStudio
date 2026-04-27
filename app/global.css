@@ -1,10 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Brand Tokens ───────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 72 100% 62%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 72 100% 62%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 14 100% 55%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 72 100% 62%;
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * { border-color: hsl(var(--border)); }
+  body { background-color: hsl(var(--background)); color: hsl(var(--foreground)); }
+}
+
+/* ── Our Brand Tokens ───────────────────────────── */
 :root {
   --black:        #0a0a0a;
   --white:        #f5f2ee;
@@ -16,26 +45,21 @@
   --gray-4:       #333333;
   --gray-5:       #555555;
   --muted:        #888888;
+
   --font-display: 'Bebas Neue', cursive;
   --font-heading: 'Syne', sans-serif;
   --font-body:    'DM Sans', sans-serif;
-  --section-py:   6rem;
-  --section-px:   4rem;
+
+  --section-py: 6rem;
+  --section-px: 4rem;
+
+  --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
-  --background: 0 0% 4%;
-  --foreground: 0 0% 96%;
-  --border: 0 0% 20%;
-  --input: 0 0% 15%;
-  --ring: 72 100% 62%;
-  --radius: 0.25rem;
 }
 
 /* ── Base Reset ─────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  border-color: hsl(var(--border));
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   background-color: var(--black);
@@ -47,17 +71,6 @@ body {
 img { max-width: 100%; display: block; }
 a   { color: inherit; text-decoration: none; }
 
-/* ── Font Utilities ─────────────────────────────── */
-.font-display { font-family: var(--font-display) !important; }
-.font-heading { font-family: var(--font-heading) !important; }
-.font-body    { font-family: var(--font-body) !important; }
-
-/* ── Color Utilities ────────────────────────────── */
-.text-accent   { color: #e8ff3e !important; }
-.bg-accent     { background-color: #e8ff3e !important; }
-.border-accent { border-color: #e8ff3e !important; }
-.text-muted    { color: #888888; }
-
 /* ── Typography ─────────────────────────────────── */
 .section-tag {
   display: inline-block;
@@ -65,13 +78,13 @@ a   { color: inherit; text-decoration: none; }
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #e8ff3e;
+  color: var(--accent);
   margin-bottom: 0.75rem;
 }
 .section-sub {
   font-size: 1rem;
   font-weight: 300;
-  color: #888888;
+  color: var(--muted);
   line-height: 1.75;
   max-width: 520px;
 }
@@ -93,20 +106,15 @@ a   { color: inherit; text-decoration: none; }
   cursor: pointer;
   transition: all 250ms ease;
   white-space: nowrap;
-  text-decoration: none;
 }
-.btn-primary { background: #e8ff3e; color: #0a0a0a; }
-.btn-primary:hover { background: #f5f2ee; transform: translateY(-2px); }
-.btn-outline { background: transparent; color: #f5f2ee; border: 1px solid rgba(245,242,238,0.35); }
-.btn-outline:hover { border-color: #e8ff3e; color: #e8ff3e; }
-.btn-dark { background: #0a0a0a; color: #e8ff3e; border: none; }
-.btn-dark:hover { background: #252525; }
+.btn-primary { background: var(--accent); color: var(--black); }
+.btn-primary:hover { background: var(--white); transform: translateY(-2px); }
+.btn-outline { background: transparent; color: var(--white); border: 1px solid rgba(245,242,238,0.35); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.btn-dark { background: var(--black); color: var(--accent); }
+.btn-dark:hover { background: var(--gray-3); }
 
-/* ── Shadow Utilities ───────────────────────────── */
-.shadow-accent    { box-shadow: 0 0 40px rgba(232,255,62,0.15); }
-.shadow-accent-md { box-shadow: 0 0 60px rgba(232,255,62,0.25); }
-
-/* ── Ticker Animation ───────────────────────────── */
+/* ── Ticker ─────────────────────────────────────── */
 @keyframes ticker {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -114,7 +122,7 @@ a   { color: inherit; text-decoration: none; }
 .animate-ticker { animation: ticker 25s linear infinite; }
 .animate-ticker:hover { animation-play-state: paused; }
 
-/* ── Grain overlay ──────────────────────────────── */
+/* ── Grain overlay for hero ─────────────────────── */
 .grain-overlay::after {
   content: '';
   position: absolute;
@@ -127,10 +135,10 @@ a   { color: inherit; text-decoration: none; }
 
 /* ── Scrollbar ──────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #141414; }
-::-webkit-scrollbar-thumb { background: #333333; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #e8ff3e; }
-::selection { background: #e8ff3e; color: #0a0a0a; }
+::-webkit-scrollbar-track { background: var(--gray-1); }
+::-webkit-scrollbar-thumb { background: var(--gray-4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::selection { background: var(--accent); color: var(--black); }
 
 /* ── Responsive ─────────────────────────────────── */
 @media (max-width: 1024px) {
